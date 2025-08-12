@@ -16,6 +16,9 @@
     "docs:build": "vitepress build docs",
     "test": "vitest"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "exports": {
     ".": {
       "import": "./dist/es.js",
