@@ -29,10 +29,11 @@ jobs:
         run: npm pack
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: lorga-ui-package
           path: ./*.tgz
+          overwrite: true
 
       - name: Read version from package.json
         id: get_version
