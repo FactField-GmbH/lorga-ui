@@ -1,5 +1,5 @@
 {
-  "name": "lorga-ui",
+  "name": "@FactField-GmbH/lorga-ui",
   "description": "Reusable components for your Vue3 frontend.",
   "version": "1.3.63",
   "author": "Daniel Mössner",
