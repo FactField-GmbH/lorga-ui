@@ -39,7 +39,7 @@ jobs:
         id: get_version
         shell: bash
         run: |
-          echo "PACKAGE_VERSION=$(node -p 'require(\"./package.json\").version')" >> $GITHUB_ENV
+          echo "PACKAGE_VERSION=$(node -p 'require("./package.json").version')" >> $GITHUB_ENV
 
       - name: Generate tag name
         id: tag
