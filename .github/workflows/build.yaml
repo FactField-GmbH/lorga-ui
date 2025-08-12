@@ -28,6 +28,22 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Generate a unique package version from package.json and commmit id
+        id: get_version
+        shell: bash
+        run: |
+          echo "PACKAGE_VERSION=$(node -p 'require("./package.json").version')-${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Set package version from env
+        run: npm version $PACKAGE_VERSION --no-git-tag-version
+        env:
+          PACKAGE_VERSION: ${{ env.PACKAGE_VERSION }}
+
+      - name: Publish to GitHub Packages
+        run: npm publish --registry=https://npm.pkg.github.com/
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Package project
         run: npm pack
 
