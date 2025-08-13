@@ -2,6 +2,7 @@
   <TableTable>
     <TableHead>
       <TableRow class="divide-x divide-gray-200">
+        <TableHeader v-if="showNumbering" class="text-right">#</TableHeader>
         <template v-for="item in computedHead" :key="item.name">
           <TableHeader
             :class="{
@@ -26,6 +27,9 @@
         :key="index"
         class="divide-x divide-gray-100"
       >
+        <TableData v-if="showNumbering" class="text-right">
+          {{ index + 1 }}
+        </TableData>      
         <template v-for="headItem in computedHead" :key="headItem.name">
           <TableData
             :class="{
@@ -49,12 +53,12 @@
         </template>
       </TableRow>
       <TableRow v-show="innerLoading">
-        <TableData :colspan="head.length">
+        <TableData :colspan="head.length + (showNumbering ? 1 : 0)">
           <CircleLoader />
         </TableData>
       </TableRow>
       <TableRow v-if="showTotal">
-        <TableData :colspan="head.length - 1" />
+        <TableData :colspan="head.length - 1 + (showNumbering ? 1 : 0)" />
         <TableData class="text-right !py-2.5 md:sticky right-0">
           <span v-if="!innerLoading && data">{{ data.length }} Total</span>
           <span v-else>Loading...</span>
@@ -100,6 +104,7 @@ const props = defineProps<{
   data?: any[] | undefined | null;
   loading?: boolean;
   showTotal?: boolean;
+  showNumbering?: boolean;
 }>();
 
 const { data, loading, head } = toRefs(props);
