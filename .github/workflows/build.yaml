@@ -26,9 +26,6 @@ jobs:
           always-auth: true
           scope: '@factfield-gmbh'
 
-      - name: Copy npm config
-        run: cp /tmp/.npmrc .npmrc
-
       - name: Install dependencies
         run: npm ci
 
