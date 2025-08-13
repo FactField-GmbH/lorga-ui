@@ -10,17 +10,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
+          registry-url: 'https://npm.pkg.github.com'
+          always-auth: true
+          scope: '@factfield-gmbh'
+
+      - name: Copy npm config
+        run: cp /tmp/.npmrc .npmrc
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run tests
         run: npm run test
@@ -28,7 +38,7 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Generate a unique package version from package.json and commmit id
+      - name: Generate a unique package version from package.json and commit id
         id: get_version
         shell: bash
         run: |
